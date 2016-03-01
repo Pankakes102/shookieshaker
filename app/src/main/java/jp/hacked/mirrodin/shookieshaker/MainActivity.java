@@ -1,6 +1,9 @@
 package jp.hacked.mirrodin.shookieshaker;
 
+
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -13,6 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.firebase.client.Firebase;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
+    private int score = 0;
 
 
     @Override
@@ -30,6 +38,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //initialize firebase library
+        Firebase.setAndroidContext(this);
+
+        //FirebaseClass DB_Update = new FirebaseClass();
+        //DB_Update.Update_DB(5);
 
         shakeTextView = (TextView) findViewById(R.id.shakeTextView);
 
@@ -52,8 +66,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onShake(int count) {
-
+                score = score + count;
                 shakeTextView.setText(shakeHandler.handleShakeEvent(Integer.toString(count)));
+                //score = count;
+
             }
         });
     }
@@ -93,4 +109,41 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void alert(View view){
+        System.out.println("SCORE: " + score);
+        //System.out.format("SCORE: %d",score);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Add to high score list?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //System.out.format("SCORE: %d", score);
+                        FirebaseClass DB_Update = new FirebaseClass();
+                        try {
+                            DB_Update.Update_DB(score);
+                            Toast.makeText(getApplicationContext(), "High Score Successfully added",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        catch(Exception e){
+
+                            Toast.makeText(getApplicationContext(), "Could not add high score to database",
+                                    Toast.LENGTH_LONG).show();
+
+                        }
+
+
+
+                       // DB_Update.Update_DB(score);
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 }
+
