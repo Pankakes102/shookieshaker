@@ -1,6 +1,8 @@
 package jp.hacked.mirrodin.shookieshaker;
 
 
+import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ import com.firebase.client.Firebase;
 public class MainActivity extends AppCompatActivity {
 
     private TextView shakeTextView;
+    private TextView animateTextView;
     private ShakeHandler shakeHandler = new ShakeHandler();
     // The following are used for the shake detection and handling
     private SensorManager mSensorManager;
@@ -45,8 +49,12 @@ public class MainActivity extends AppCompatActivity {
         //DB_Update.Update_DB(5);
 
         shakeTextView = (TextView) findViewById(R.id.shakeTextView);
-
+        animateTextView = (TextView) findViewById(R.id.animateTextView);
+        animateTextView.setTextSize(20);
         shakeTextView.setTextSize(40);
+        shakeTextView.setText(shakeHandler.handleShakeEvent(Integer.toString(score))); // put a 0 on the screen if no score
+        animateTextView.setVisibility(View.INVISIBLE); // hide until first shake
+
         // ShakeDetector initialization
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -57,8 +65,37 @@ public class MainActivity extends AppCompatActivity {
             public void onShake(int count) {
                 score = score + count;
                 shakeTextView.setText(shakeHandler.handleShakeEvent(Integer.toString(count)));
-                //score = count;
+                animateTextView.animate().translationYBy(-50).setDuration(500).setListener(new AnimatorListener() {
 
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        // gets called on every shake
+                        animateTextView.clearAnimation();
+                        animateTextView.setTranslationY(50);
+                        animateTextView.setVisibility(View.VISIBLE);
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+                        // never gets called
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        // after animation set visibility gone (removes from layout)
+                        // only is called once the animation is done (no more shake events)
+                        animateTextView.setTranslationY(50);
+                        animateTextView.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                        // no idea if this ever gets called
+                        animateTextView.setVisibility(View.GONE);
+                    }
+                });
             }
         });
     }
