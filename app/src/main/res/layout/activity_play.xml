@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< Updated upstream:app/src/main/res/layout/activity_play.xml
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-=======
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
->>>>>>> Stashed changes:app/src/main/res/layout/content_main.xml
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,26 +14,34 @@
     android:background="@drawable/playbackground"
     android:focusable="false">
 
-
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/play"
-        android:id="@+id/playButton"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/shakeTextView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="157dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/animateTextView"
+        android:text="+1"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp" />
 
     <Button
         android:layout_width="wrap_content"
-<<<<<<< Updated upstream:app/src/main/res/layout/activity_play.xml
         android:layout_height="50dp"
         android:id="@+id/HighScore"
         android:onClick="alert"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="false"
-        android:background="@drawable/save_high_score"
-        android:layout_toEndOf="@id/animateTextView" />
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/save_high_score"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -47,11 +52,4 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true" />
 
-=======
-        android:layout_height="wrap_content"
-        android:text="@string/leaderboard"
-        android:id="@+id/leaderboardButton"
-        android:layout_below="@+id/playButton"
-        android:layout_centerHorizontal="true" />
->>>>>>> Stashed changes:app/src/main/res/layout/content_main.xml
 </RelativeLayout>
