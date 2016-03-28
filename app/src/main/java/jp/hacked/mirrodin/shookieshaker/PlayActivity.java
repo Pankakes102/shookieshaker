@@ -104,7 +104,7 @@ public class PlayActivity extends Activity {
             }
         });
 
-        // Back Arrow button and call home screen.
+        // Back button and call home screen.
         Button backButton= (Button) findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
