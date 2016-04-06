@@ -71,7 +71,7 @@ public class PlayActivity extends Activity {
                 score = score + count;
                 shakeTextView.setText(shakeHandler.handleShakeEvent(Integer.toString(count)));
                 animateTextView.animate().cancel();
-                animateTextView.animate().translationYBy(-50).setDuration(500).setListener(new Animator.AnimatorListener() {
+                animateTextView.animate().translationYBy(-100).setDuration(500).setListener(new Animator.AnimatorListener() {
 
                     @Override
                     public void onAnimationStart(Animator animation) {

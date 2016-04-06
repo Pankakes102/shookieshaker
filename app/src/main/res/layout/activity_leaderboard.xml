@@ -27,4 +27,23 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:background="@drawable/newgame" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_toStartOf="@+id/listView2"
+        android:layout_above="@+id/backButton"
+        android:stackFromBottom="false"
+        android:touchscreenBlocksFocus="false"
+        android:drawSelectorOnTop="false"
+        android:layout_toLeftOf="@+id/listView2" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView2"
+        android:layout_alignLeft="@+id/newGameButton"
+        android:layout_alignStart="@+id/newGameButton"
+        android:layout_above="@+id/newGameButton" />
 </RelativeLayout>

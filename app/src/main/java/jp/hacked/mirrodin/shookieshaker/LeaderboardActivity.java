@@ -6,15 +6,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+
+import com.firebase.client.Firebase;
 
 public class LeaderboardActivity extends Activity {
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Firebase.setAndroidContext(this);
 
         // run the app in full screen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -22,6 +26,26 @@ public class LeaderboardActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_leaderboard);
+        //setContentView(R.layout.content_leaderboard);
+
+        // Populate leaderboard
+        FirebaseListAdapter get_Scores = new FirebaseListAdapter();
+        get_Scores.getScores();
+
+        ListView lv1 = (ListView) findViewById(R.id.listView);
+        ListView lv2 = (ListView) findViewById(R.id.listView2);
+
+        ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                get_Scores.names);
+        ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                get_Scores.scores);
+
+        lv1.setAdapter(arrayAdapter1);
+        lv2.setAdapter(arrayAdapter2);
 
         // Back button and call home screen.
         Button backButton= (Button) findViewById(R.id.backButton);
