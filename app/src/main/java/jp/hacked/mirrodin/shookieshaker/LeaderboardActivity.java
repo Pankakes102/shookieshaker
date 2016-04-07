@@ -37,11 +37,11 @@ public class LeaderboardActivity extends Activity {
 
         ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_list_item_1,
+                R.layout.custom_textview,
                 get_Scores.names);
         ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_list_item_1,
+                R.layout.custom_textview,
                 get_Scores.scores);
 
         lv1.setAdapter(arrayAdapter1);
